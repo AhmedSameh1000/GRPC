@@ -1,0 +1,74 @@
+syntax = "proto3";
+
+option csharp_namespace = "GrpcService2.Protos";
+import "google/api/annotations.proto";
+
+service ToDoIt{
+	rpc CreateToDo(createToDo) returns (createToDoResoponse){
+		option(google.api.http)={
+			post:"/v1/todo",
+			body:"*"
+		};
+	};
+
+	rpc GetById(readToDoRequest) returns (readToDoResponse){
+			option(google.api.http)={
+			get:"/v1/todo/{id}"
+		};
+	};
+
+
+	rpc GetAll(getallrequest) returns (getallresponse){
+		option(google.api.http)={
+			get:"/v1/todo"
+		};
+	};
+	rpc UpdateToDo(Updatetodorequest) returns (Updatetodoresponse){
+		option(google.api.http)={
+			put:"/v1/todo",
+			body:"*"
+		};
+
+	};
+	rpc DeleteToDo(deletetodorequest) returns (deletetodoresponse){
+	option(google.api.http)={
+			delete:"/v1/todo/{id}"
+		};
+	};
+}
+
+message createToDo{
+	string title =1;
+	string description=2;
+}
+message createToDoResoponse{
+	int32 id=1;
+}
+message readToDoRequest{
+	int32 id=1;
+}
+message readToDoResponse{
+	int32 id=1;
+	string title =2;
+	string description=3;
+	string status=4;
+}
+message getallrequest{}
+message getallresponse{
+	repeated readToDoResponse to_do=1;
+}
+message Updatetodorequest{
+	int32 id=1;
+	string title =2;
+	string description=3;
+	string status=4;
+}
+message Updatetodoresponse{
+	int32 id=1;
+}
+message deletetodorequest{
+	int32 id=1;
+}
+message deletetodoresponse{
+	int32 id=1;
+}
